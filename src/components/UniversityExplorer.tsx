@@ -117,6 +117,7 @@ const UniversityCard: React.FC<UniversityCardProps> = ({ uni, onCompare, compari
             <img
               src={uni.image}
               alt={uni.imageAlt || uni.name}
+              loading="lazy"
               className="w-full h-full object-cover"
             />
             {/* Dark overlay */}
@@ -219,11 +220,13 @@ export const UniversityExplorer: React.FC = () => {
   const [hasScholarships, setHasScholarships] = useState(false);
   const [sortBy, setSortBy] = useState('QS Ranking');
   const [compareList, setCompareList] = useState<string[]>(['mit', 'stanford', 'toronto']);
-  const [showAllUnis, setShowAllUnis] = useState(false);
   const [activeUni, setActiveUni] = useState<University | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const PER_PAGE = 12;
 
-  const toggleCountry = (c: string) => setSelectedCountries(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]);
-  const toggleCourse = (c: string) => setSelectedCourses(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]);
+  const toggleCountry = (c: string) => { setSelectedCountries(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]); setCurrentPage(1); };
+  const toggleCourse = (c: string) => { setSelectedCourses(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]); setCurrentPage(1); };
   const toggleCompare = (id: string) => setCompareList(prev => prev.includes(id) ? prev.filter(x => x !== id) : prev.length < 3 ? [...prev, id] : prev);
 
   const filteredUnis = UNIVERSITIES.filter(u => {
@@ -232,8 +235,17 @@ export const UniversityExplorer: React.FC = () => {
     return true;
   }).sort((a, b) => sortBy === 'QS Ranking' ? a.qsRank - b.qsRank : 0);
 
-  const displayedUnis = showAllUnis ? filteredUnis : filteredUnis.slice(0, 30);
+  const totalPages = Math.ceil(filteredUnis.length / PER_PAGE);
+  const displayedUnis = filteredUnis.slice(0, currentPage * PER_PAGE);
   const compareUnis = UNIVERSITIES.filter(u => compareList.includes(u.id));
+
+  const loadMore = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setCurrentPage(prev => prev + 1);
+      setIsLoading(false);
+    }, 400);
+  };
 
   const countries = ['Germany', 'Canada', 'Australia', 'United Kingdom', 'United States', 'Ireland'];
   const courses = ['Computer Science', 'Data Science', 'Business Analytics', 'MBA', 'Mechanical Engineering', 'Artificial Intelligence'];
@@ -261,6 +273,7 @@ export const UniversityExplorer: React.FC = () => {
               <img
                 src={dest.image}
                 alt={dest.country}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-slate-900/10" />
@@ -449,15 +462,44 @@ export const UniversityExplorer: React.FC = () => {
               </div>
             )}
 
-            {!showAllUnis && filteredUnis.length > 30 && displayedUnis.length > 0 && (
+            {displayedUnis.length < filteredUnis.length && displayedUnis.length > 0 && (
               <div className="flex justify-center mb-10">
-                <button
-                  onClick={() => setShowAllUnis(true)}
-                  className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-[#6D4AFF] border-2 border-[#6D4AFF]/20 hover:bg-[#6D4AFF]/6 transition-colors focus:outline-none"
-                >
-                  Load More Universities
-                  <ChevronDown className="w-4 h-4" />
-                </button>
+                {isLoading ? (
+                  <div className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-slate-400 bg-slate-50 border border-slate-200">
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
+                      <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Loading...
+                  </div>
+                ) : (
+                  <button
+                    onClick={loadMore}
+                    className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-[#6D4AFF] border-2 border-[#6D4AFF]/20 hover:bg-[#6D4AFF]/6 transition-colors focus:outline-none"
+                  >
+                    Load More Universities ({filteredUnis.length - displayedUnis.length} remaining)
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Skeleton loading cards */}
+            {isLoading && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+                {Array.from({ length: PER_PAGE }).map((_, i) => (
+                  <div key={i} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden animate-pulse">
+                    <div className="h-[110px] bg-slate-100" />
+                    <div className="p-4 space-y-3">
+                      <div className="h-3 bg-slate-100 rounded w-3/4" />
+                      <div className="h-3 bg-slate-100 rounded w-1/2" />
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="h-8 bg-slate-50 rounded" />
+                        <div className="h-8 bg-slate-50 rounded" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
 
@@ -704,6 +746,7 @@ export const UniversityExplorer: React.FC = () => {
                     <img
                       src={activeUni.image}
                       alt={activeUni.imageAlt || activeUni.name}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent" />

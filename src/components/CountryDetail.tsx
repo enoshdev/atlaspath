@@ -881,6 +881,7 @@ export const CountryDetail: React.FC<CountryDetailProps> = ({ countryId }) => {
                 <img
                   src={config.landmarkImage}
                   alt={config.landmarkLabel}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
@@ -1025,6 +1026,7 @@ export const CountryDetail: React.FC<CountryDetailProps> = ({ countryId }) => {
                     <img
                       src={config.universities[activeUniIdx]?.image}
                       alt={config.universities[activeUniIdx]?.name}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
@@ -1219,7 +1221,7 @@ export const CountryDetail: React.FC<CountryDetailProps> = ({ countryId }) => {
               <div className="grid grid-cols-2 gap-3.5">
                 {config.cities.map((city, idx) => (
                   <div key={idx} className="relative h-[80px] rounded-xl overflow-hidden shadow-sm group">
-                    <img src={city.image} alt={city.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                    <img src={city.image} alt={city.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                     <div className="absolute inset-0 bg-black/40" />
                     <div className="absolute bottom-2.5 left-2.5 text-white font-bold leading-none">
                       <p className="text-[11px]">{city.name}</p>

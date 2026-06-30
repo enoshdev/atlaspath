@@ -416,7 +416,7 @@ export const BookConsultation: React.FC = () => {
 
           {/* Hero Right Side: Sticky Consultation Progress Card (35% on Desktop, top-aligned with hero, sticky top offset 120px) */}
           <div className="lg:col-span-4 flex justify-center lg:justify-end lg:sticky lg:top-[120px] z-20">
-            <div className="w-full max-w-[340px] bg-white border border-slate-200/80 rounded-3xl p-5 shadow-xl shadow-slate-200/40 relative overflow-hidden transition-all duration-300">
+            <div className="w-full max-w-full sm:max-w-[340px] bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xl shadow-slate-200/40 relative overflow-hidden transition-all duration-300">
               
               {/* Header with Pulse Indicator */}
               <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
@@ -488,7 +488,7 @@ export const BookConsultation: React.FC = () => {
                   <div className="flex items-center gap-2">
                     {selectedExpert ? (
                       <div className="w-5 h-5 rounded-full overflow-hidden border border-white shadow-xs">
-                        <img src={selectedExpert.img} className="w-full h-full object-cover" />
+                        <img src={selectedExpert.img} alt={selectedExpert.name} loading="lazy" className="w-full h-full object-cover" />
                       </div>
                     ) : (
                       <Users className="w-4 h-4 text-slate-400" />
@@ -589,7 +589,7 @@ export const BookConsultation: React.FC = () => {
                 <button
                   key={goal.id}
                   onClick={() => handleGoalSelect(goal.id)}
-                  className={`group relative text-left p-5 rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between h-[220px] overflow-hidden ${
+                  className={`group relative text-left p-4 sm:p-5 rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between min-h-[180px] sm:h-[220px] overflow-hidden ${
                     isSelected
                       ? 'border-primary ring-2 ring-primary/10 shadow-lg shadow-primary/5 bg-primary/[0.01]'
                       : 'border-slate-200/80 shadow-xs hover:border-slate-300 hover:shadow-md'
@@ -683,7 +683,7 @@ export const BookConsultation: React.FC = () => {
                     {/* Item 1: Recommended Expert */}
                     <div className="flex items-center gap-4 shrink-0 min-w-[220px]">
                       <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-md border-2 border-white shrink-0">
-                        <img src={matchedExpert?.img} className="w-full h-full object-cover" />
+                        <img src={matchedExpert?.img} alt={matchedExpert?.name || 'Expert'} loading="lazy" className="w-full h-full object-cover" />
                       </div>
                       <div>
                         <span className="text-[8px] font-extrabold text-slate-400 uppercase tracking-wider block">Recommended Expert</span>
@@ -821,7 +821,7 @@ export const BookConsultation: React.FC = () => {
                     <div>
                       <div className="flex items-center gap-4 mb-4">
                         <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-100 shadow-sm shrink-0">
-                          <img src={expert.img} alt={expert.name} className="w-full h-full object-cover" />
+                          <img src={expert.img} alt={expert.name} loading="lazy" className="w-full h-full object-cover" />
                         </div>
                         <div>
                           <div className="flex items-center gap-1">
@@ -1067,7 +1067,7 @@ export const BookConsultation: React.FC = () => {
                     {selectedExpert ? (
                       <>
                         <span className="w-4 h-4 rounded-full overflow-hidden inline-block border border-slate-100">
-                          <img src={selectedExpert.img} className="w-full h-full object-cover" />
+                          <img src={selectedExpert.img} alt={selectedExpert.name} loading="lazy" className="w-full h-full object-cover" />
                         </span>
                         <span>{selectedExpert.name}</span>
                       </>

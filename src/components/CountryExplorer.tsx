@@ -634,6 +634,7 @@ export const CountryExplorer: React.FC = () => {
                   <img
                     src={country.image}
                     alt={country.name}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
                       e.currentTarget.src = 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&auto=format&fit=crop&q=80';
@@ -869,6 +870,7 @@ export const CountryExplorer: React.FC = () => {
                           <img
                             src={country.image}
                             alt={country.name}
+                            loading="lazy"
                             className="w-full h-full object-cover"
                             onError={(e) => {
                               e.currentTarget.src = 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop&q=80';
@@ -1086,7 +1088,7 @@ export const CountryExplorer: React.FC = () => {
             {UNIVERSITIES_BY_COUNTRY[activeTabCountry]?.map((uni, idx) => (
               <div key={idx} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow">
                 <div className="relative h-[110px] w-full overflow-hidden">
-                  <img src={uni.image} alt={uni.name} className="w-full h-full object-cover" />
+                  <img src={uni.image} alt={uni.name} loading="lazy" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-2.5 left-3 w-8 h-8 rounded-xl flex items-center justify-center border border-white/20 text-white text-[10px] font-black uppercase tracking-wider" style={{ backgroundColor: uni.color }}>
                     {uni.shortName}

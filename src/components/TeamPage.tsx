@@ -199,6 +199,7 @@ export const TeamPage: React.FC = () => {
                 <img
                   src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80"
                   alt="AtlasPath Team Collaborating"
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
@@ -230,6 +231,7 @@ export const TeamPage: React.FC = () => {
                     <img
                       src={leader.img}
                       alt={leader.name}
+                      loading="lazy"
                       className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-350"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent" />
@@ -306,7 +308,7 @@ export const TeamPage: React.FC = () => {
                 {EXPERTS_BY_CATEGORY[activeCategoryTab]?.map((exp, idx) => (
                   <div key={idx} className="bg-white border border-slate-200/60 rounded-2xl p-4 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3.5">
-                      <img src={exp.img} alt={exp.name} className="w-10 h-10 rounded-full object-cover border border-slate-150" />
+                      <img src={exp.img} alt={exp.name} loading="lazy" className="w-10 h-10 rounded-full object-cover border border-slate-150" />
                       <div>
                         <h4 className="text-xs font-extrabold text-slate-800 leading-none">{exp.name}</h4>
                         <span className="text-[9px] text-primary font-bold mt-1.5 block leading-none">{exp.role}</span>
@@ -340,6 +342,7 @@ export const TeamPage: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=80"
                 alt="Student Consultations"
+                loading="lazy"
                 onError={handleImgError}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -355,6 +358,7 @@ export const TeamPage: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=80"
                 alt="University meetings"
+                loading="lazy"
                 onError={handleImgError}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -370,6 +374,7 @@ export const TeamPage: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&auto=format&fit=crop&q=80"
                 alt="Global Events & Networking"
+                loading="lazy"
                 onError={handleImgError}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -385,6 +390,7 @@ export const TeamPage: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80"
                 alt="Office Culture & Team Collaboration"
+                loading="lazy"
                 onError={handleImgError}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -400,6 +406,7 @@ export const TeamPage: React.FC = () => {
               <img
                 src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80"
                 alt="Visa success celebrations"
+                loading="lazy"
                 onError={handleImgError}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -453,7 +460,7 @@ export const TeamPage: React.FC = () => {
                         </div>
                         <span className="text-[9px] text-slate-400 font-bold uppercase">{item.salary}</span>
                       </div>
-                      <img src={item.img} alt={item.role} className="w-12 h-12 rounded-xl object-cover border border-slate-150 shrink-0" />
+                      <img src={item.img} alt={item.role} loading="lazy" className="w-12 h-12 rounded-xl object-cover border border-slate-150 shrink-0" />
                     </div>
                   ))}
                 </div>
@@ -486,6 +493,7 @@ export const TeamPage: React.FC = () => {
                     <img
                       src="https://images.unsplash.com/photo-1601524909162-ae8725290836?w=500&auto=format&fit=crop&q=80"
                       alt="Convocation Day"
+                      loading="lazy"
                       onError={handleImgError}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
@@ -500,6 +508,7 @@ export const TeamPage: React.FC = () => {
                     <img
                       src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=300&auto=format&fit=crop&q=80"
                       alt="Campus Life"
+                      loading="lazy"
                       onError={handleImgError}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
@@ -514,6 +523,7 @@ export const TeamPage: React.FC = () => {
                     <img
                       src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=300&auto=format&fit=crop&q=80"
                       alt="University Fairs"
+                      loading="lazy"
                       onError={handleImgError}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
@@ -528,6 +538,7 @@ export const TeamPage: React.FC = () => {
                     <img
                       src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=300&auto=format&fit=crop&q=80"
                       alt="Alumni Meetups"
+                      loading="lazy"
                       onError={handleImgError}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
@@ -542,6 +553,7 @@ export const TeamPage: React.FC = () => {
                     <img
                       src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=300&auto=format&fit=crop&q=80"
                       alt="Visa Approvals"
+                      loading="lazy"
                       onError={handleImgError}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
@@ -562,7 +574,7 @@ export const TeamPage: React.FC = () => {
                       'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&auto=format&fit=crop&q=80',
                       'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&auto=format&fit=crop&q=80'
                     ].map((avatar, i) => (
-                      <img key={i} className="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover shrink-0" src={avatar} alt="Student avatar" />
+                      <img key={i} className="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover shrink-0" src={avatar} alt="Student avatar" loading="lazy" />
                     ))}
                     <div className="flex items-center justify-center h-7 w-7 rounded-full bg-primary/10 text-primary ring-2 ring-white text-[9px] font-black shrink-0">
                       +1200
@@ -639,7 +651,7 @@ export const TeamPage: React.FC = () => {
               <div key={idx} className="bg-white border border-slate-200/50 rounded-3xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <img src={review.img} alt={review.name} className="w-9 h-9 rounded-full object-cover border border-slate-200" />
+                    <img src={review.img} alt={review.name} loading="lazy" className="w-9 h-9 rounded-full object-cover border border-slate-200" />
                     <div>
                       <h4 className="text-xs font-bold text-slate-800 leading-none">{review.name}</h4>
                       <span className="text-[8px] text-slate-400 font-semibold mt-1 block leading-none">{review.uni}</span>

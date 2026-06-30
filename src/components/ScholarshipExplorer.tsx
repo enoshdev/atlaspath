@@ -637,6 +637,7 @@ export const ScholarshipExplorer: React.FC = () => {
                 <img
                   src={schol.image}
                   alt={schol.name}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     e.currentTarget.src = 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop&q=80';
@@ -842,6 +843,7 @@ export const ScholarshipExplorer: React.FC = () => {
                           <img
                             src={schol.image}
                             alt={schol.name}
+                            loading="lazy"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             onError={(e) => {
                               e.currentTarget.src = 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&auto=format&fit=crop&q=80';

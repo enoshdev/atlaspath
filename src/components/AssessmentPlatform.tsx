@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import {
   CheckCircle, Calendar, ArrowRight,
   Compass, DollarSign, Building, Clock, Globe, Users,
-  Star, ChevronDown, Check, ShieldCheck, Lock, Sparkles
+  Star, ChevronDown, Check, ShieldCheck, Lock, Sparkles, School
 } from 'lucide-react';
 
 /* ─── STRUCTURAL STEPS ─── */
@@ -236,16 +236,16 @@ export const AssessmentPlatform: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="grid grid-cols-3 gap-4 bg-slate-50 border border-slate-100 rounded-2xl p-4 max-w-md"
+                className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 bg-slate-50 border border-slate-100 rounded-2xl p-3 sm:p-4 max-w-md"
               >
                 {[
                   { value: '95%', label: 'Success Rate' },
                   { value: '15,000+', label: 'Students Guided' },
-                  { value: '500+', label: 'UniversitiesMatched' }
+                  { value: '500+', label: 'Universities' }
                 ].map(({ value, label }) => (
                   <div key={label} className="text-center">
-                    <span className="text-lg font-black text-primary leading-none block">{value}</span>
-                    <span className="text-[9px] text-[#64748B] font-bold mt-1 block leading-snug">{label}</span>
+                    <span className="text-base sm:text-lg font-black text-primary leading-none block">{value}</span>
+                    <span className="text-[8px] sm:text-[9px] text-[#64748B] font-bold mt-1 block leading-snug">{label}</span>
                   </div>
                 ))}
               </motion.div>
@@ -746,10 +746,17 @@ export const AssessmentPlatform: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => alert(`Full report sent to: ${emailInput}`)}
-                  className="w-full py-3 rounded-xl text-center text-xs font-bold text-white bg-primary hover:bg-secondary transition-colors"
+                  className="w-full py-3 rounded-xl text-center text-xs font-bold text-white bg-primary hover:bg-secondary transition-colors mb-2.5"
                 >
                   Unlock Report Brochure
                 </button>
+                <a
+                  href="/book-consultation"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-center text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-500/20"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Book Free Expert Call
+                </a>
               </div>
             </div>
 

@@ -8,7 +8,6 @@ interface ChatMessage {
   timestamp: Date;
 }
 
-/* ─── KNOWLEDGE BASE ─── */
 interface KnowledgeEntry {
   keywords: string[];
   response: string;
@@ -143,14 +142,12 @@ const KNOWLEDGE: KnowledgeEntry[] = [
   },
 ];
 
-/* ─── FALLBACK RESPONSES ─── */
 const FALLBACKS = [
   "I am not sure about that specific query. However, I can help you with:\n\n• Study destinations and universities\n• Scholarships and funding\n• Visa processes\n• Tests (IELTS, TOEFL, GRE)\n• Applications and deadlines\n• Budget planning\n\nCould you try rephrasing your question?",
   "That is a great question! While I do not have the exact details right now, here is what I recommend:\n\n1. Take our free Readiness Assessment for personalized guidance\n2. Book a consultation with our experts\n3. Check our Resources Hub for comprehensive guides\n\nWhat would you like to know more about?",
   "Hmm, I could not find a direct match for that. Try asking about:\n\n• A specific country (Germany, Canada, Australia, etc.)\n• Scholarships and financial aid\n• Visa requirements\n• IELTS/TOEFL/GRE preparation\n• Application timelines",
 ];
 
-/* ─── COMPONENT ─── */
 export const AIAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -245,7 +242,7 @@ export const AIAssistant: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 sm:bottom-6 right-3 sm:right-6 z-40" data-chat-widget>
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -253,11 +250,11 @@ export const AIAssistant: React.FC = () => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="p-4 bg-primary hover:bg-secondary text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="p-3 sm:p-4 bg-primary hover:bg-secondary text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             aria-label="Open Atlas AI assistant"
           >
             <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping group-hover:animate-none pointer-events-none" />
-            <MessageSquare className="w-6 h-6 relative z-10" />
+            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -269,17 +266,17 @@ export const AIAssistant: React.FC = () => {
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 80, scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="w-[calc(100vw-32px)] sm:w-[400px] h-[520px] bg-white border border-slate-200/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+            className="w-[calc(100vw-24px)] sm:w-[400px] h-[480px] sm:h-[520px] bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col"
           >
             {/* Header */}
-            <div className="bg-[#090D1A] text-white p-4 flex items-center justify-between shrink-0">
+            <div className="bg-[#090D1A] text-white p-3 sm:p-4 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                  <Sparkles className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary flex items-center justify-center">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
                 <div>
-                  <span className="text-xs font-extrabold tracking-tight block">Atlas AI</span>
-                  <span className="text-[9px] text-emerald-400 font-bold uppercase leading-none">Online &amp; Active</span>
+                  <span className="text-[11px] sm:text-xs font-extrabold tracking-tight block">Atlas AI</span>
+                  <span className="text-[8px] sm:text-[9px] text-emerald-400 font-bold uppercase leading-none">Online &amp; Active</span>
                 </div>
               </div>
               <button
@@ -287,21 +284,21 @@ export const AIAssistant: React.FC = () => {
                 className="p-1.5 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
                 aria-label="Close"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3 bg-slate-50/50 scroll-smooth">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-col gap-3 bg-slate-50/50 scroll-smooth">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`flex flex-col max-w-[85%] ${
+                  className={`flex flex-col max-w-[88%] sm:max-w-[85%] ${
                     msg.sender === 'user' ? 'self-end items-end' : 'self-start items-start'
                   }`}
                 >
                   <div
-                    className={`p-3 text-xs leading-relaxed rounded-2xl ${
+                    className={`p-2.5 sm:p-3 text-[11px] sm:text-xs leading-relaxed rounded-xl sm:rounded-2xl ${
                       msg.sender === 'user'
                         ? 'bg-primary text-white rounded-tr-none'
                         : 'bg-white text-slate-800 border border-slate-100 shadow-sm rounded-tl-none'
@@ -309,7 +306,7 @@ export const AIAssistant: React.FC = () => {
                   >
                     {msg.sender === 'bot' ? formatText(msg.text) : msg.text}
                   </div>
-                  <span className="text-[8px] text-slate-400 mt-1 px-1">
+                  <span className="text-[7px] sm:text-[8px] text-slate-400 mt-1 px-1">
                     {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
@@ -317,32 +314,30 @@ export const AIAssistant: React.FC = () => {
 
               {isTyping && (
                 <div className="flex flex-col max-w-[80%] self-start items-start">
-                  <div className="p-3 bg-white text-slate-500 border border-slate-100 shadow-sm rounded-2xl rounded-tl-none flex items-center gap-1.5">
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                    <span className="text-xs font-medium">Thinking…</span>
+                  <div className="p-2.5 sm:p-3 bg-white text-slate-500 border border-slate-100 shadow-sm rounded-xl sm:rounded-2xl rounded-tl-none flex items-center gap-1.5">
+                    <RefreshCw className="w-3 h-3 sm:w-3.5 sm:h-3.5 animate-spin" />
+                    <span className="text-[11px] sm:text-xs font-medium">Thinking…</span>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-100 bg-white shrink-0">
-              {/* Suggestions */}
+            <div className="p-3 sm:p-4 border-t border-slate-100 bg-white shrink-0">
               {suggestions.length > 0 && !isTyping && (
-                <div className="flex flex-wrap gap-1.5 mb-3">
+                <div className="flex flex-wrap gap-1.5 mb-2 sm:mb-3">
                   {suggestions.map((s, i) => (
                     <button
                       key={i}
                       onClick={() => handleSuggestionClick(s)}
-                      className="px-3 py-1.5 bg-primary/5 border border-primary/10 rounded-full text-[10px] font-bold text-primary hover:bg-primary/10 transition-all"
+                      className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-primary/5 border border-primary/10 rounded-full text-[9px] sm:text-[10px] font-bold text-primary hover:bg-primary/10 transition-all"
                     >
-                      {s} <ArrowRight className="w-2.5 h-2.5 inline ml-0.5" />
+                      {s} <ArrowRight className="w-2 h-2 sm:w-2.5 sm:h-2.5 inline ml-0.5" />
                     </button>
                   ))}
                 </div>
               )}
 
-              {/* Input */}
               <div className="flex items-center gap-2 bg-slate-50 border border-slate-200/60 rounded-xl px-3 py-1.5 focus-within:border-primary/40 focus-within:bg-white transition-all">
                 <input
                   ref={inputRef}
@@ -352,7 +347,7 @@ export const AIAssistant: React.FC = () => {
                   onKeyDown={handleKeyDown}
                   placeholder="Type your question…"
                   disabled={isTyping}
-                  className="bg-transparent text-xs text-slate-800 placeholder-slate-400 outline-none w-full disabled:opacity-50"
+                  className="bg-transparent text-[11px] sm:text-xs text-slate-800 placeholder-slate-400 outline-none w-full disabled:opacity-50"
                 />
                 <button
                   onClick={() => handleSend(input)}
@@ -360,18 +355,18 @@ export const AIAssistant: React.FC = () => {
                   className="p-1.5 rounded-lg bg-primary text-white hover:bg-secondary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Send"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
 
               {messages.length === 1 && (
-                <div className="flex flex-wrap gap-1.5 mt-2">
+                <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-2">
                   {['Germany', 'Canada', 'Australia', 'UK', 'USA', 'Scholarships', 'Visa process', 'IELTS'].map(q => (
                     <button
                       key={q}
                       onClick={() => handleSend(q)}
                       disabled={isTyping}
-                      className="px-2 py-1 bg-slate-100 rounded-lg text-[9px] font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition-all disabled:opacity-50"
+                      className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-slate-100 rounded-lg text-[8px] sm:text-[9px] font-bold text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition-all disabled:opacity-50"
                     >
                       {q}
                     </button>
@@ -382,17 +377,6 @@ export const AIAssistant: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style>{`
-        @keyframes bounce-slow-delayed {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-4px); }
-        }
-        .animate-bounce-slow-delayed {
-          animation: bounce-slow-delayed 4s ease-in-out infinite;
-          animation-delay: 2s;
-        }
-      `}</style>
     </div>
   );
 };

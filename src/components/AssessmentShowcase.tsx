@@ -244,10 +244,10 @@ export const AssessmentShowcase: React.FC = () => {
                   </button>
                 ) : (
                   <a
-                    href="#book-consultation"
+                    href="/book-consultation"
                     className="flex items-center gap-1.5 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full transition-all shadow-md shadow-emerald-500/10"
                   >
-                    <span>Book Consultation</span>
+                    <span>Book Free Consultation</span>
                     <Check className="w-3.5 h-3.5" />
                   </a>
                 )}

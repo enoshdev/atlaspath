@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { WhatsAppButton } from '../components/WhatsAppButton';
-import { AIAssistant } from '../components/AIAssistant';
 import { School, Home, Calendar } from 'lucide-react';
 ---
 
@@ -59,7 +57,5 @@ import { School, Home, Calendar } from 'lucide-react';
     </div>
   </main>
 
-  <Footer client:visible />
-  <WhatsAppButton client:visible />
-  <AIAssistant client:visible />
+  <Footer />
 </Layout>

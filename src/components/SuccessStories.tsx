@@ -563,6 +563,7 @@ export const SuccessStories: React.FC = () => {
                 <img
                   src={story.image}
                   alt={story.name}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
                     e.currentTarget.src = 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&auto=format&fit=crop&q=80';
@@ -683,6 +684,7 @@ export const SuccessStories: React.FC = () => {
                     <img
                       src={story.image}
                       alt={story.name}
+                      loading="lazy"
                       className="w-10 h-10 rounded-full object-cover border border-slate-100"
                     />
                     <div>
@@ -879,7 +881,7 @@ export const SuccessStories: React.FC = () => {
                 { name: 'Aditya Nair', uni: 'NUS Singapore', cover: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=300&auto=format&fit=crop&q=80' }
               ].map((video, idx) => (
                 <div key={idx} className="relative h-[90px] rounded-xl overflow-hidden shadow-sm group cursor-pointer">
-                  <img src={video.cover} alt={video.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                  <img src={video.cover} alt={video.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                     <div className="w-7 h-7 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white border border-white/20 group-hover:bg-white/50 transition-all">
                       <Play className="w-3 h-3 fill-current ml-0.5" />
@@ -942,16 +944,16 @@ export const SuccessStories: React.FC = () => {
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="h-[70px] rounded-xl overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=200&auto=format&fit=crop&q=80" alt="Campus Life" className="w-full h-full object-cover" />
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=200&auto=format&fit=crop&q=80" alt="Campus Life" loading="lazy" className="w-full h-full object-cover" />
                   </div>
                   <div className="h-[70px] rounded-xl overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=200&auto=format&fit=crop&q=80" alt="Graduation" className="w-full h-full object-cover" />
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=200&auto=format&fit=crop&q=80" alt="Graduation" loading="lazy" className="w-full h-full object-cover" />
                   </div>
                   <div className="h-[70px] rounded-xl overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&auto=format&fit=crop&q=80" alt="Study Group" className="w-full h-full object-cover" />
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&auto=format&fit=crop&q=80" alt="Study Group" loading="lazy" className="w-full h-full object-cover" />
                   </div>
                   <div className="h-[70px] rounded-xl overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=200&auto=format&fit=crop&q=80" alt="Admissions" className="w-full h-full object-cover" />
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=200&auto=format&fit=crop&q=80" alt="Admissions" loading="lazy" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
