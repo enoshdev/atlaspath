@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, MessageSquare, Calendar } from 'lucide-react';
+import { Menu, X, ArrowRight, MessageSquare, Calendar, ClipboardCheck, Phone } from 'lucide-react';
 import { Logo } from './Logo';
 
 export const Navbar: React.FC = () => {
@@ -11,13 +11,9 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -25,7 +21,27 @@ export const Navbar: React.FC = () => {
     setCurrentPath(window.location.pathname);
   }, []);
 
+  // Body scroll lock when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Store current scroll position
+      const scrollY = window.scrollY;
+      document.body.classList.add('mobile-menu-open');
+      document.body.style.top = `-${scrollY}px`;
+    } else {
+      const scrollY = Math.abs(parseInt(document.body.style.top || '0', 10));
+      document.body.classList.remove('mobile-menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollY);
+    }
+    return () => {
+      document.body.classList.remove('mobile-menu-open');
+      document.body.style.top = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const navLinks = [
+    { name: 'Home', href: '/' },
     { name: 'Universities', href: '/universities' },
     { name: 'Countries', href: '/countries' },
     { name: 'Scholarships', href: '/scholarships' },
@@ -35,16 +51,16 @@ export const Navbar: React.FC = () => {
     { name: 'About Us', href: '/#about' },
   ];
 
+  // Desktop-only nav (no Home)
+  const desktopNavLinks = navLinks.filter(l => l.name !== 'Home');
+
   const isActive = (href: string) => {
-    if (href === '/countries' && currentPath.startsWith('/countries')) return true;
-    if (href === '/universities' && currentPath.startsWith('/universities')) return true;
-    if (href === '/scholarships' && currentPath.startsWith('/scholarships')) return true;
-    if (href === '/success-stories' && currentPath.startsWith('/success-stories')) return true;
-    if (href === '/resources' && currentPath.startsWith('/resources')) return true;
-    if (href === '/team' && currentPath.startsWith('/team')) return true;
     if (href === '/' && currentPath === '/') return true;
+    if (href !== '/' && href !== '/#about' && currentPath.startsWith(href)) return true;
     return false;
   };
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <>
@@ -63,7 +79,7 @@ export const Navbar: React.FC = () => {
 
           {/* Center: Desktop Nav links */}
           <nav className="hidden lg:flex items-center justify-center gap-1 xl:gap-2 h-full relative">
-            {navLinks.map((link, idx) => {
+            {desktopNavLinks.map((link, idx) => {
               const active = isActive(link.href);
               const isHovered = hoveredIdx === idx;
               return (
@@ -131,6 +147,7 @@ export const Navbar: React.FC = () => {
               className="lg:hidden p-2 rounded-full text-text hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-primary"
               aria-label="Open mobile navigation menu"
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -138,77 +155,96 @@ export const Navbar: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Panel */}
+      {/* ─── FULL-SCREEN MOBILE MENU ─── */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md lg:hidden"
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+            className="fixed inset-0 z-50 bg-white lg:hidden flex flex-col"
           >
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white p-6 shadow-2xl flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-8">
-                  <Logo />
-                  <button
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 rounded-full text-text hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-primary"
-                    aria-label="Close mobile navigation menu"
+            {/* Header row */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 shrink-0">
+              <a href="/" onClick={closeMobileMenu} aria-label="AtlasPath Homepage">
+                <Logo />
+              </a>
+              <button
+                onClick={closeMobileMenu}
+                className="p-2.5 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-all focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label="Close mobile navigation menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <nav className="flex-1 overflow-y-auto px-5 py-6 flex flex-col gap-1" aria-label="Mobile navigation">
+              {navLinks.map((link, idx) => {
+                const active = isActive(link.href);
+                return (
+                  <motion.a
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.04, type: 'spring', stiffness: 260, damping: 26 }}
+                    key={link.name}
+                    href={link.href}
+                    onClick={closeMobileMenu}
+                    className={`flex items-center justify-between px-4 py-3.5 rounded-2xl text-base font-semibold transition-all duration-200 ${
+                      active
+                        ? 'text-primary bg-primary/6 border border-primary/10'
+                        : 'text-slate-700 hover:text-primary hover:bg-slate-50'
+                    }`}
                   >
-                    <X className="w-6 h-6" />
-                  </button>
-                </div>
+                    <span>{link.name}</span>
+                    {active && <ArrowRight className="w-4 h-4 text-primary" />}
+                  </motion.a>
+                );
+              })}
+            </nav>
 
-                <nav className="flex flex-col gap-4">
-                  {navLinks.map((link, idx) => {
-                    const active = isActive(link.href);
-                    return (
-                      <motion.a
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        key={link.name}
-                        href={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`text-lg font-semibold transition-all duration-300 ${
-                          active ? 'text-primary' : 'text-text hover:text-primary'
-                        }`}
-                      >
-                        {link.name}
-                      </motion.a>
-                    );
-                  })}
-                </nav>
-              </div>
+            {/* Bottom CTA area */}
+            <div className="shrink-0 px-5 pb-8 pt-4 border-t border-slate-100 flex flex-col gap-3"
+              style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom, 2rem))' }}
+            >
+              {/* Primary CTA */}
+              <a
+                href="/assessment"
+                onClick={closeMobileMenu}
+                className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-sm font-bold text-white bg-primary hover:bg-secondary transition-all duration-300 shadow-lg shadow-primary/25"
+              >
+                <ClipboardCheck className="w-4 h-4" />
+                <span>Start Free Assessment</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
 
-              <div className="flex flex-col gap-3 mt-8">
+              {/* Secondary CTAs */}
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href="/book-consultation"
+                  onClick={closeMobileMenu}
+                  className="flex items-center justify-center gap-1.5 py-3.5 rounded-2xl text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>Consultation</span>
+                </a>
                 <a
                   href="https://wa.me/919876543210"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-all duration-300"
+                  onClick={closeMobileMenu}
+                  className="flex items-center justify-center gap-1.5 py-3.5 rounded-2xl text-sm font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-all"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>Connect via WhatsApp</span>
-                </a>
-                <a
-                  href="/book-consultation"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-primary hover:bg-secondary transition-all duration-300 shadow-lg shadow-primary/20"
-                >
-                  <Calendar className="w-4 h-4" />
-                  <span>Book Consultation</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
                 </a>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

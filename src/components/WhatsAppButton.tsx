@@ -1,36 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { MessageCircle } from 'lucide-react';
 
 export const WhatsAppButton: React.FC = () => {
-  const [chatOpen, setChatOpen] = useState(false);
-
-  useEffect(() => {
-    const checkChat = () => {
-      const chatWidget = document.querySelector('[data-chat-widget]');
-      if (chatWidget) {
-        const openBtn = chatWidget.querySelector('button');
-        const chatPanel = chatWidget.querySelector('[class*="h-\\[480px"]');
-        setChatOpen(!!chatPanel);
-      }
-    };
-    const observer = new MutationObserver(checkChat);
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-    checkChat();
-    return () => observer.disconnect();
-  }, []);
-
-  if (chatOpen) return null;
-
   return (
     <a
       href="https://wa.me/919876543210"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 sm:bottom-6 left-3 sm:left-6 z-30 p-3 sm:p-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
+      className="floating-btn fixed z-30 flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
+      style={{
+        bottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))',
+        left: '1rem',
+        width: '52px',
+        height: '52px',
+        borderRadius: '50%',
+        backgroundColor: '#22c55e',
+        boxShadow: '0 8px 32px rgba(34,197,94,0.35)',
+        transition: 'transform 0.2s, background-color 0.2s',
+      }}
       aria-label="Contact us on WhatsApp"
+      onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
+      onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
     >
-      <span className="absolute inset-0 rounded-full bg-emerald-500/30 animate-ping group-hover:animate-none pointer-events-none" />
-      <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
+      {/* Ping animation */}
+      <span
+        className="absolute inset-0 rounded-full bg-emerald-400/30 animate-ping pointer-events-none group-hover:animate-none"
+        style={{ borderRadius: '50%' }}
+      />
+      <MessageCircle className="w-6 h-6 text-white relative z-10" />
     </a>
   );
 };

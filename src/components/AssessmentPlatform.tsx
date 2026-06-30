@@ -118,6 +118,7 @@ export const AssessmentPlatform: React.FC = () => {
   const [englishTest, setEnglishTest] = useState('ielts');
   const [emailInput, setEmailInput] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [mobileScoreExpanded, setMobileScoreExpanded] = useState(false);
 
   // Form completion indicator
   const formProgress = useMemo(() => {
@@ -315,11 +316,26 @@ export const AssessmentPlatform: React.FC = () => {
 
       {/* ─── MULTI-STEP PLANNER & LIVE SCOREPANEL (SIDE-BY-SIDE) ─── */}
       <section id="assessment-start" className="py-14 bg-slate-50 border-t border-b border-slate-100 scroll-mt-20">
+
+        {/* Mobile Sticky Progress Bar (hidden on lg+) */}
+        <div className="sticky top-20 z-20 lg:hidden bg-white/95 backdrop-blur-sm border-b border-slate-100 px-4 py-3 mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold text-primary">Step {activeStep} of 6</span>
+            <span className="text-[10px] font-bold text-slate-400">{formProgress}% complete</span>
+          </div>
+          <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-primary rounded-full transition-all duration-500"
+              style={{ width: `${formProgress}%` }}
+            />
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-stretch gap-8">
             
-            {/* Step Navigator Sidebar */}
-            <div className="w-full lg:w-[240px] shrink-0">
+            {/* Step Navigator Sidebar — hidden on mobile, shown on desktop */}
+            <div className="hidden lg:block w-full lg:w-[240px] shrink-0">
               <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm sticky top-24">
                 <div className="mb-5 pb-3 border-b border-slate-100">
                   <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest leading-none">Assessment Journey</h3>
@@ -561,26 +577,29 @@ export const AssessmentPlatform: React.FC = () => {
               </div>
 
               {/* Form Actions Footer */}
-              <div className="mt-8 pt-4 border-t border-slate-50 flex items-center justify-between">
-                <button
-                  onClick={handleBackStep}
-                  disabled={activeStep === 1}
-                  className={`px-5 py-2.5 rounded-xl text-xs font-bold border transition-colors ${
-                    activeStep === 1 ? 'border-slate-100 text-slate-300 cursor-not-allowed' : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  Back
-                </button>
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
-                    <Lock className="w-3.5 h-3.5 text-emerald-500" /> Answers secure
-                  </span>
+              <div className="mt-8 pt-4 border-t border-slate-50">
+                {/* Mobile: stack buttons vertically for thumb reach */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                   <button
-                    onClick={handleNextStep}
-                    className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-primary hover:bg-secondary transition-colors"
+                    onClick={handleBackStep}
+                    disabled={activeStep === 1}
+                    className={`order-2 sm:order-1 px-5 py-3 sm:py-2.5 rounded-xl text-xs font-bold border transition-colors ${
+                      activeStep === 1 ? 'border-slate-100 text-slate-300 cursor-not-allowed' : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                    }`}
                   >
-                    {activeStep === 6 ? 'View Matching Dashboard' : 'Continue'}
+                    ← Back
                   </button>
+                  <div className="order-1 sm:order-2 flex items-center gap-3">
+                    <span className="hidden sm:flex text-[10px] text-slate-400 font-bold items-center gap-1">
+                      <Lock className="w-3.5 h-3.5 text-emerald-500" /> Answers secure
+                    </span>
+                    <button
+                      onClick={handleNextStep}
+                      className="w-full sm:w-auto px-6 py-3.5 sm:py-2.5 rounded-xl text-sm sm:text-xs font-bold text-white bg-primary hover:bg-secondary transition-colors shadow-lg shadow-primary/20"
+                    >
+                      {activeStep === 6 ? 'View Matching Dashboard' : 'Continue →'}
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -588,7 +607,49 @@ export const AssessmentPlatform: React.FC = () => {
 
             {/* Real-time Score Panel Sidebar */}
             <div className="w-full lg:w-[280px] shrink-0">
-              <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm sticky top-24 flex flex-col justify-between">
+
+              {/* Mobile: Collapsible Score Card */}
+              <div className="lg:hidden bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+                <button
+                  onClick={() => setMobileScoreExpanded(p => !p)}
+                  className="w-full flex items-center justify-between px-4 py-3.5"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/8 flex items-center justify-center">
+                      <span className="text-sm font-black text-primary">{liveScores.overallScore}%</span>
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-black text-slate-800">Live Match Score</p>
+                      <p className="text-[10px] text-emerald-500 font-bold">Updates as you answer</p>
+                    </div>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${mobileScoreExpanded ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileScoreExpanded && (
+                  <div className="px-4 pb-4 pt-1 border-t border-slate-50 space-y-3">
+                    {[
+                      { label: 'Country Match', val: liveScores.countryMatch },
+                      { label: 'University Match', val: liveScores.universityMatch },
+                      { label: 'Scholarship Match', val: liveScores.scholarshipMatch },
+                      { label: 'Visa Readiness', val: liveScores.visaReadiness },
+                      { label: 'Career Potential', val: liveScores.careerPotential }
+                    ].map((row) => (
+                      <div key={row.label} className="text-xs font-semibold">
+                        <div className="flex items-center justify-between text-slate-600 mb-1">
+                          <span>{row.label}</span>
+                          <span className="text-[#0F172A] font-extrabold">{row.val}%</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${row.val}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Desktop: Full Score Card */}
+              <div className="hidden lg:block bg-white border border-slate-100 rounded-3xl p-5 shadow-sm sticky top-24 flex flex-col justify-between">
                 <div>
                   <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest mb-1.5">Live Score Card</h3>
                   <p className="text-[10px] text-slate-400 font-semibold mb-6">Updates dynamically as you supply credentials</p>
@@ -635,6 +696,7 @@ export const AssessmentPlatform: React.FC = () => {
                   </div>
                 </div>
               </div>
+              {/* End desktop score card */}
             </div>
 
           </div>

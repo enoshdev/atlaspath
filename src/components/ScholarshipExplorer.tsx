@@ -358,8 +358,30 @@ export const ScholarshipExplorer: React.FC = () => {
   const [compareList, setCompareList] = useState<string[]>(['daad', 'chevening']);
   const [activeTabCountry, setActiveTabCountry] = useState('germany');
   const [limit, setLimit] = useState(5);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+
+  /* ─── MOBILE FILTER BODY LOCK ─── */
+  React.useEffect(() => {
+    if (isMobileFilterOpen) {
+      const scrollY = window.scrollY;
+      document.body.classList.add('mobile-menu-open');
+      document.body.style.top = `-${scrollY}px`;
+    } else {
+      const scrollY = Math.abs(parseInt(document.body.style.top || '0', 10));
+      document.body.classList.remove('mobile-menu-open');
+      document.body.style.top = '';
+      if (scrollY) window.scrollTo(0, scrollY);
+    }
+    return () => {
+      document.body.classList.remove('mobile-menu-open');
+      document.body.style.top = '';
+    };
+  }, [isMobileFilterOpen]);
+
+  /* Active filter count (for badge on mobile button) */
+  const activeFilterCount = selectedCountries.length + selectedDegrees.length + selectedTypes.length + selectedFundings.length + (ieltsFilter !== 'any' ? 1 : 0);
 
   /* ─── HANDLERS ─── */
   const toggleCountry = (c: string) =>
@@ -699,9 +721,59 @@ export const ScholarshipExplorer: React.FC = () => {
       <section id="explorer-grid" className="py-14 border-t border-slate-100 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-stretch gap-8">
-            
-            {/* Sidebar filter */}
-            <div className="w-full lg:w-[260px] shrink-0">
+
+            {/* ── MOBILE FILTER BUTTON (hidden on lg+) ── */}
+            <div className="lg:hidden mb-2">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsMobileFilterOpen(true)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold text-primary bg-primary/8 border border-primary/15 hover:bg-primary/12 transition-all"
+                  aria-label="Open filter panel"
+                >
+                  <Filter className="w-4 h-4" />
+                  <span>Filter Scholarships</span>
+                  {activeFilterCount > 0 && (
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </button>
+                {activeFilterCount > 0 && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="px-4 py-3.5 rounded-2xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+              {/* Active filter chips */}
+              {activeFilterCount > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2.5">
+                  {selectedCountries.map(c => (
+                    <button key={c} onClick={() => setSelectedCountries(p => p.filter(x => x !== c))}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                      {c} <X className="w-3 h-3" />
+                    </button>
+                  ))}
+                  {selectedDegrees.map(d => (
+                    <button key={d} onClick={() => setSelectedDegrees(p => p.filter(x => x !== d))}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                      {d} <X className="w-3 h-3" />
+                    </button>
+                  ))}
+                  {selectedFundings.map(f => (
+                    <button key={f} onClick={() => setSelectedFundings(p => p.filter(x => x !== f))}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                      {f} <X className="w-3 h-3" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* ── DESKTOP SIDEBAR FILTER (hidden on mobile) ── */}
+            <div className="hidden lg:block w-full lg:w-[260px] shrink-0">
               <div className="sticky top-24 bg-white border border-slate-100 rounded-2xl p-5 shadow-sm">
                 <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
                   <div className="flex items-center gap-1.5 text-sm font-bold text-[#0F172A]">
@@ -804,6 +876,172 @@ export const ScholarshipExplorer: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* ── MOBILE BOTTOM SHEET FILTER ── */}
+            <AnimatePresence>
+              {isMobileFilterOpen && (
+                <>
+                  {/* Backdrop */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm lg:hidden"
+                    onClick={() => setIsMobileFilterOpen(false)}
+                  />
+                  {/* Sheet */}
+                  <motion.div
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+                    className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-2xl lg:hidden flex flex-col"
+                    style={{ maxHeight: '90vh' }}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Filter Scholarships"
+                  >
+                    {/* Sheet Header */}
+                    <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 shrink-0">
+                      <div className="flex items-center gap-2">
+                        <Filter className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-bold text-slate-800">Filter Scholarships</span>
+                        {activeFilterCount > 0 && (
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">
+                            {activeFilterCount}
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => setIsMobileFilterOpen(false)}
+                        className="p-2 rounded-full hover:bg-slate-100 transition-all"
+                        aria-label="Close filter"
+                      >
+                        <X className="w-5 h-5 text-slate-500" />
+                      </button>
+                    </div>
+
+                    {/* Scrollable Filter Content */}
+                    <div className="flex-1 overflow-y-auto px-5 py-4">
+                      {/* Country */}
+                      <div className="mb-5">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Study Destination</p>
+                        <div className="flex flex-wrap gap-2">
+                          {['Germany', 'Canada', 'Australia', 'United Kingdom', 'United States', 'France', 'Singapore'].map((c) => (
+                            <button
+                              key={c}
+                              onClick={() => setSelectedCountries(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                                selectedCountries.includes(c)
+                                  ? 'bg-primary text-white border-primary shadow-sm shadow-primary/20'
+                                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300'
+                              }`}
+                            >
+                              {c}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Degree Level */}
+                      <div className="mb-5">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Degree Level</p>
+                        <div className="flex flex-wrap gap-2">
+                          {['Bachelors', 'Masters', 'PhD'].map((d) => (
+                            <button
+                              key={d}
+                              onClick={() => setSelectedDegrees(prev => prev.includes(d) ? prev.filter(x => x !== d) : [...prev, d])}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                                selectedDegrees.includes(d)
+                                  ? 'bg-primary text-white border-primary shadow-sm shadow-primary/20'
+                                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300'
+                              }`}
+                            >
+                              {d}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Funding Type */}
+                      <div className="mb-5">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Funding Type</p>
+                        <div className="flex flex-wrap gap-2">
+                          {['Fully Funded', 'Partially Funded'].map((f) => (
+                            <button
+                              key={f}
+                              onClick={() => setSelectedFundings(prev => prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f])}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                                selectedFundings.includes(f)
+                                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm shadow-emerald-500/20'
+                                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300'
+                              }`}
+                            >
+                              {f}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Scholarship Type */}
+                      <div className="mb-5">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Scholarship Type</p>
+                        <div className="flex flex-wrap gap-2">
+                          {['Government', 'University', 'Private', 'Research', 'Merit-based'].map((t) => (
+                            <button
+                              key={t}
+                              onClick={() => setSelectedTypes(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t])}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                                selectedTypes.includes(t)
+                                  ? 'bg-primary text-white border-primary shadow-sm shadow-primary/20'
+                                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300'
+                              }`}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* IELTS */}
+                      <div className="mb-2">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">IELTS Requirement</p>
+                        <select
+                          value={ieltsFilter}
+                          onChange={(e) => setIeltsFilter(e.target.value)}
+                          className="w-full text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none"
+                        >
+                          <option value="any">No Minimum IELTS Score</option>
+                          <option value="6.0">Under 6.0</option>
+                          <option value="6.5">6.5 and above</option>
+                          <option value="7.0">7.0 and above</option>
+                          <option value="7.5">7.5 and above</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Sticky Action Buttons */}
+                    <div
+                      className="shrink-0 px-5 pt-4 pb-6 border-t border-slate-100 flex gap-3"
+                      style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 1.5rem))' }}
+                    >
+                      <button
+                        onClick={() => { clearAllFilters(); }}
+                        className="flex-1 py-3.5 rounded-2xl text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all"
+                      >
+                        Clear Filters
+                      </button>
+                      <button
+                        onClick={() => setIsMobileFilterOpen(false)}
+                        className="flex-[2] py-3.5 rounded-2xl text-sm font-bold text-white bg-primary hover:bg-secondary transition-all shadow-lg shadow-primary/20"
+                      >
+                        Show {filteredScholarships.length} Result{filteredScholarships.length !== 1 ? 's' : ''}
+                      </button>
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
 
             {/* Right: premium card grid */}
             <div className="flex-1">

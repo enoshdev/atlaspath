@@ -242,7 +242,14 @@ export const AIAssistant: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-4 sm:bottom-6 right-3 sm:right-6 z-40" data-chat-widget>
+    <div
+      className="floating-btn fixed z-40"
+      data-chat-widget
+      style={{
+        bottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))',
+        right: '1rem',
+      }}
+    >
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -266,7 +273,8 @@ export const AIAssistant: React.FC = () => {
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 80, scale: 0.9, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="w-[calc(100vw-24px)] sm:w-[400px] h-[480px] sm:h-[520px] bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+            className="w-[calc(100vw-32px)] sm:w-[400px] bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+            style={{ height: 'min(520px, calc(100dvh - 120px))' }}
           >
             {/* Header */}
             <div className="bg-[#090D1A] text-white p-3 sm:p-4 flex items-center justify-between shrink-0">
