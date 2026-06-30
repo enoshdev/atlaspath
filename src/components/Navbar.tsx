@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, MessageSquare, Calendar, ClipboardCheck, Phone } from 'lucide-react';
+import { Menu, X, ArrowRight, MessageSquare, Calendar, ClipboardCheck } from 'lucide-react';
 import { Logo } from './Logo';
 
 export const Navbar: React.FC = () => {

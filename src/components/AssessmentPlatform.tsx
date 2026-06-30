@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import {
   CheckCircle, Calendar, ArrowRight,
   Compass, DollarSign, Building, Clock, Globe, Users,
-  Star, ChevronDown, Check, ShieldCheck, Lock, Sparkles, School
+  Star, ChevronDown, Check, ShieldCheck, Lock, Sparkles
 } from 'lucide-react';
 
 /* ─── STRUCTURAL STEPS ─── */

@@ -343,7 +343,7 @@ export const BookConsultation: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#0F172A] font-sans antialiased relative selection:bg-primary/10 selection:text-primary pb-20">
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 relative z-10">
         
         {/* ====================================================
             SECTION 1: Premium Hero Grid (2 Columns: 65% / 35% split)

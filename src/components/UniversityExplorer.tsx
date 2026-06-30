@@ -108,7 +108,7 @@ const UniversityCard: React.FC<UniversityCardProps> = ({ uni, onCompare, compari
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.18 } }}
-      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:shadow-slate-100/85 transition-all duration-300 overflow-hidden flex flex-col"
+      className="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:shadow-slate-100/85 transition-all duration-300 overflow-hidden flex flex-col snap-start shrink-0 w-[80vw] sm:w-[280px] lg:w-auto lg:shrink"
     >
       {/* Campus Image Header */}
       <div className="relative h-[110px] w-full overflow-hidden">
@@ -449,7 +449,7 @@ export const UniversityExplorer: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4 mb-6 animate-fadeIn">
+              <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 pb-4 lg:grid lg:grid-cols-3 xl:grid-cols-5 lg:overflow-x-visible lg:snap-none lg:pb-0 mb-6 animate-fadeIn">
                 {displayedUnis.map((uni) => (
                   <UniversityCard
                     key={uni.id}

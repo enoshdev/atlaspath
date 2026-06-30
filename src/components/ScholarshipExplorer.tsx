@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, Bookmark, BarChart2, ArrowRight, ChevronDown, ChevronUp,
   Globe, CheckCircle, GraduationCap, Users, Award, Filter, Calendar,
-  Briefcase, RefreshCw, Check, FileText, BookOpen
+  Briefcase, RefreshCw, Check, FileText, BookOpen, X
 } from 'lucide-react';
 
 /* ─── DATA TYPES & DATA ─── */
