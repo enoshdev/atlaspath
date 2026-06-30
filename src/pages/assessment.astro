@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { AssessmentPlatform } from '../components/AssessmentPlatform';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="AI-Powered Assessment | AtlasPath — Find Your Perfect Study Abroad Path"
+  description="Answer a few simple questions and receive personalized country, university, and scholarship matches instantly using our AI planning engine."
+>
+  <Navbar client:load />
+  <AssessmentPlatform client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

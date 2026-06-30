@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { CountryDetail } from '../../components/CountryDetail';
+import { Footer } from '../../components/Footer';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { AIAssistant } from '../../components/AIAssistant';
+---
+
+<Layout
+  title="Study in Australia | AtlasPath — Find Your Dream Australian University"
+  description="Discover top Group of Eight universities in Australia, compare tuition costs, post-study work rights, living costs, and scholarships like Australia Awards."
+>
+  <Navbar client:load />
+  <CountryDetail countryId="australia" client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

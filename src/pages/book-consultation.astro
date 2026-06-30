@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { BookConsultation } from '../components/BookConsultation';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Book Study Abroad Consultation | AtlasPath — Expert Roadmap Strategy Session"
+  description="Schedule a personalized 1-on-1 strategy session with AtlasPath advisors. Shortlist universities, map budgets, verify scholarships, and review visa guidelines."
+>
+  <Navbar client:load />
+  <BookConsultation client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

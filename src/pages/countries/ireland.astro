@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { CountryDetail } from '../../components/CountryDetail';
+import { Footer } from '../../components/Footer';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { AIAssistant } from '../../components/AIAssistant';
+---
+
+<Layout
+  title="Study in Ireland | AtlasPath — Find Your Dream Irish University"
+  description="Discover top universities in Ireland, compare tuition costs, post-study work rights, living costs, and scholarships like the Government of Ireland Scholarship."
+>
+  <Navbar client:load />
+  <CountryDetail countryId="ireland" client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { UniversitiesHero } from '../components/UniversitiesHero';
+import { UniversityExplorer } from '../components/UniversityExplorer';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Universities | AtlasPath — Find Your Dream University"
+  description="Explore 500+ universities across 50+ countries. Compare rankings, tuition fees, scholarships, career outcomes and admission requirements with AtlasPath."
+>
+  <Navbar client:load />
+  <UniversitiesHero client:load />
+  <UniversityExplorer client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

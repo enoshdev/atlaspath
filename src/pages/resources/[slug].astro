@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase';
+import ResourceDetail from '../../components/ResourceDetail';
+
+export async function getStaticPaths() {
+  return [];
+}
+
+const { slug } = Astro.params;
+
+const { data: resource, error } = await supabase
+  .from('resources')
+  .select('*')
+  .eq('slug', slug)
+  .single();
+
+if (error || !resource) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout
+  title={`${resource.title} | AtlasPath Resources`}
+  description={resource.description}
+>
+  <ResourceDetail client:load resource={resource} />
+</Layout>

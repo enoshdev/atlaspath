@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { CountryExplorer } from '../components/CountryExplorer';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Countries | AtlasPath — Explore Study Destinations Worldwide"
+  description="Compare tuition fees, scholarships, work opportunities, visa pathways and top universities across leading study destinations worldwide."
+>
+  <Navbar client:load />
+  <CountryExplorer client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

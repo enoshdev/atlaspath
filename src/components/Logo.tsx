@@ -1,0 +1,65 @@
+import React from 'react';
+
+interface LogoProps {
+  className?: string;
+  iconOnly?: boolean;
+}
+
+export const Logo: React.FC<LogoProps> = ({ className = '', iconOnly = false }) => {
+  return (
+    <div className={`flex items-center gap-2.5 select-none ${className}`}>
+      {/* 
+        Compass Star — exactly matching the reference:
+        4 cardinal diamond rays (N/S/E/W) + 4 shorter diagonal rays
+        Color: dark slate (#1E2D4A) — NOT purple
+      */}
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 40 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        style={{ flexShrink: 0 }}
+      >
+        {/* North ray — tall tapered diamond */}
+        <path d="M20 1L22.2 18L20 21L17.8 18L20 1Z" fill="#1E2D4A" />
+        {/* South ray */}
+        <path d="M20 39L17.8 22L20 19L22.2 22L20 39Z" fill="#1E2D4A" />
+        {/* East ray */}
+        <path d="M39 20L22 22.2L19 20L22 17.8L39 20Z" fill="#1E2D4A" />
+        {/* West ray */}
+        <path d="M1 20L18 17.8L21 20L18 22.2L1 20Z" fill="#1E2D4A" />
+
+        {/* NE diagonal — shorter, narrower */}
+        <path d="M33 7L25.5 17L24 15.5L33 7Z" fill="#1E2D4A" opacity="0.55" />
+        {/* NW diagonal */}
+        <path d="M7 7L16 15.5L14.5 17L7 7Z" fill="#1E2D4A" opacity="0.55" />
+        {/* SE diagonal */}
+        <path d="M33 33L24 25L25.5 23.5L33 33Z" fill="#1E2D4A" opacity="0.55" />
+        {/* SW diagonal */}
+        <path d="M7 33L14.5 23.5L16 25L7 33Z" fill="#1E2D4A" opacity="0.55" />
+
+        {/* Center dot */}
+        <circle cx="20" cy="20" r="2" fill="#1E2D4A" />
+      </svg>
+
+      {!iconOnly && (
+        <div className="flex flex-col leading-none">
+          <span
+            className="font-bold tracking-tight text-[#0F172A]"
+            style={{ fontSize: '17px', letterSpacing: '-0.3px' }}
+          >
+            AtlasPath
+          </span>
+          <span
+            className="font-semibold uppercase text-[#64748B]"
+            style={{ fontSize: '7px', letterSpacing: '1.2px', marginTop: '2px' }}
+          >
+            Your Global Future, Planned.
+          </span>
+        </div>
+      )}
+    </div>
+  );
+};

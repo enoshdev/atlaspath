@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { ResourcesHub } from '../components/ResourcesHub';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Resource Hub | AtlasPath — Comprehensive Study Abroad Knowledge Center"
+  description="Access expert guides, visa process requirements, blocked accounts, SOP/LOR templates, cost calculators, and study abroad timeline planners in one place."
+>
+  <Navbar client:load />
+  <ResourcesHub client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

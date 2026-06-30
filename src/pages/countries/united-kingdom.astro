@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { CountryDetail } from '../../components/CountryDetail';
+import { Footer } from '../../components/Footer';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { AIAssistant } from '../../components/AIAssistant';
+---
+
+<Layout
+  title="Study in the United Kingdom | AtlasPath — Find Your Dream UK University"
+  description="Discover top Russell Group universities in the UK, compare tuition costs, post-study work rights, living costs, and scholarships like Chevening."
+>
+  <Navbar client:load />
+  <CountryDetail countryId="uk" client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { TeamPage } from '../components/TeamPage';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Our Team & Experts | AtlasPath — Professional Study Abroad Guides"
+  description="Meet the core leadership team, visa officers, scholarship consultants, and global study abroad advisors behind thousands of student success stories."
+>
+  <Navbar client:load />
+  <TeamPage client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

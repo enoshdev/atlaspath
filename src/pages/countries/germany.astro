@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { CountryDetail } from '../../components/CountryDetail';
+import { Footer } from '../../components/Footer';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { AIAssistant } from '../../components/AIAssistant';
+---
+
+<Layout
+  title="Study in Germany | AtlasPath — Find Your Dream German University"
+  description="Discover top universities in Germany, compare tuition costs, blocking accounts, APS requirements, scholarships like DAAD, and post-study visa rules."
+>
+  <Navbar client:load />
+  <CountryDetail countryId="germany" client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

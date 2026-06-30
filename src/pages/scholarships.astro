@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { ScholarshipExplorer } from '../components/ScholarshipExplorer';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Scholarships | AtlasPath — Find Scholarships That Fund Your Future"
+  description="Search and compare 5000+ global scholarships, university grants, and funding opportunities from governments and organizations worldwide."
+>
+  <Navbar client:load />
+  <ScholarshipExplorer client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

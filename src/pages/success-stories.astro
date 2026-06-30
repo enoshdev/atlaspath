@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { SuccessStories } from '../components/SuccessStories';
+import { Footer } from '../components/Footer';
+import { WhatsAppButton } from '../components/WhatsAppButton';
+import { AIAssistant } from '../components/AIAssistant';
+---
+
+<Layout
+  title="Success Stories | AtlasPath — Real Students, Real Universities"
+  description="Discover how thousands of international students achieved their global education goals, secured full scholarships, and received visa approvals through AtlasPath."
+>
+  <Navbar client:load />
+  <SuccessStories client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

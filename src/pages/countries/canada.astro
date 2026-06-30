@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { CountryDetail } from '../../components/CountryDetail';
+import { Footer } from '../../components/Footer';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { AIAssistant } from '../../components/AIAssistant';
+---
+
+<Layout
+  title="Study in Canada | AtlasPath — Find Your Dream Canadian University"
+  description="Discover top universities in Canada, compare tuition costs, PGWP permits, PR pathways, scholarships like Vanier CGS, and student cities."
+>
+  <Navbar client:load />
+  <CountryDetail countryId="canada" client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>

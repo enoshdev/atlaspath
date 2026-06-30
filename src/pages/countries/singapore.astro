@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { CountryDetail } from '../../components/CountryDetail';
+import { Footer } from '../../components/Footer';
+import { WhatsAppButton } from '../../components/WhatsAppButton';
+import { AIAssistant } from '../../components/AIAssistant';
+---
+
+<Layout
+  title="Study in Singapore | AtlasPath — Find Your Dream Singaporean University"
+  description="Discover top ranked universities in Singapore, compare tuition costs, post-study work rights, living costs, and ASEAN scholarships."
+>
+  <Navbar client:load />
+  <CountryDetail countryId="singapore" client:load />
+  <Footer client:visible />
+  <WhatsAppButton client:visible />
+  <AIAssistant client:visible />
+</Layout>
