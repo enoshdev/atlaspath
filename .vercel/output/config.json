@@ -1,0 +1,156 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/404/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/500/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/admin/resources/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/admin/subscribers/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/admin/upload/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/consultation/book/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/newsletter/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/popular-downloads/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/related-resources/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/resources/download/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/resources/save/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/resources/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/resources/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/assessment/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/book-consultation/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/australia/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/canada/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/germany/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/ireland/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/netherlands/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/singapore/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/united-kingdom/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/united-states/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/countries/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/resources/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/resources/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/scholarships/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/success-stories/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/team/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/universities/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/.*$",
+			"dest": "_render",
+			"status": 404
+		}
+	]
+}
